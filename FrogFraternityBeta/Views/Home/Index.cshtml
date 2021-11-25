@@ -2,7 +2,33 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-xl-center"> 
+<style>
+
+    body {
+        background-color: whitesmoke;
+    }
+    .multicolortext {
+        background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red);
+        -webkit-background-clip: text ;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-family: 'ITC Bauhaus'; 
+    }
+    .box {
+        width: 500px;
+        border: 10px solid green; 
+        background-color:darkgray;
+        margin: auto; 
+    }
+</style>
+
+
+<div class="text-xl-center multicolortext box" style="background-color: whitesmoke"> 
     <h1 class="display-4">Howdy Howdy Frog Fiends</h1>
-    <p>Bulletin Board</p>
+    <p>Bulletin Board<br />
+    <a>-F.A.Q</a><br />
+    <a>-Rules</a><br />
+    <a>-Forum</a><br />
+    </p>
 </div>
