@@ -1,21 +1,29 @@
-﻿@{ 
+﻿@model IEnumerable<FrogFraternityBeta.Models.Post>
+
+@{ 
     ViewData["Title"] = "Forum Index"; 
 }
 
-<ol>
-    <li class="row">
-        <a href="/">
-            <h4 class="title">
-                Frog
-            </h4>
-            <div class="bottom">
-            </div>
-            <p class="timestamp">
-                12/6/2002
-            </p>
-            <p class="comment-count">
-                9 comments
-            </p>
-        </a>
-    </li>
-</ol>
+<table class=" table">
+    <tbody>
+        @foreach (var item in Model)
+        { // This is the driving code that handles showing every post present in the database
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title) | @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+}
+    </tbody>
+</table>
