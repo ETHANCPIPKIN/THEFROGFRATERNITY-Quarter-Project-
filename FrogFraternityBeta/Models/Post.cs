@@ -12,7 +12,7 @@ namespace FrogFraternityBeta.Models
 
         public int PostId { get; set; }
 
-        public int Username { get; set; }
+        public string Username { get; set; }
 
         public string Title { get; set; }
 

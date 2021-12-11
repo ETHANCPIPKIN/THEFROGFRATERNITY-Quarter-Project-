@@ -4,15 +4,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FrogFraternityBeta.Data;
+using Microsoft.EntityFrameworkCore; 
 
 namespace FrogFraternityBeta.Controllers
 {
     public class ForumController : Controller
     {
-        // GET: ForumController
-        public ActionResult Index()
+
+        private readonly ForumContext _context;
+        public ForumController(ForumContext context)
         {
-            return View();
+            _context = context; 
+        }
+        // GET: ForumController
+
+        public async Task<ActionResult> Index()
+        {
+            return View(await _context.Posts.ToListAsync());
         }
 
         // GET: ForumController/Details/5
