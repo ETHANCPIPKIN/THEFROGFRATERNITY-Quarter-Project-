@@ -10,20 +10,15 @@
         { // This is the driving code that handles showing every post present in the database
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title) | @Html.DisplayFor(modelItem => item.Username)
+                    @Html.ActionLink(item.Title + " | " + item.Username, "Details", new { id = item.PostId })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PostTime)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostTime)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
+               
             </tr>
 }
     </tbody>
 </table>
+
+<a asp-controller="Forum" asp-action="Create">Create Post</a>

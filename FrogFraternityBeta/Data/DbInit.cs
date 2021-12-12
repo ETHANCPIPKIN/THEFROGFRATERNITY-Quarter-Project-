@@ -27,17 +27,23 @@ namespace FrogFraternityBeta.Data
                 context.Posts.Add(s);
             }
             context.SaveChanges();
-            /*
+
             var users = new User[]
             {
-                // new Course{CourseID=1050,Title="Chemistry",Credits=3},
+                new User{UserName="FroggyLover",
+                    Password="10456391824346701",
+                    fontColor="#FF0000",
+                    profilePic="https://cdn.discordapp.com/attachments/628439897832816642/919102648244920320/20211210_214523.jpg"},
+                new User{UserName="Forg",
+                    Password="86497712335516898",
+                    fontColor="#FFFFFF",
+                    profilePic="https://cdn.discordapp.com/attachments/628439897832816642/919102648244920320/20211210_214523.jpg"}
             };
             foreach (User c in users)
             {
-                context.User.Add(c);
+                context.Users.Add(c);
             }
             context.SaveChanges();
-            */
         }
     }
 }
