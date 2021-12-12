@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace FrogFraternityBeta
 {
@@ -22,9 +23,19 @@ namespace FrogFraternityBeta
         {
             services.AddDbContext<ForumContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllersWithViews(); 
+            services.AddControllersWithViews();
 
+            services.AddDistributedMemoryCache();
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddHttpContextAccessor(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

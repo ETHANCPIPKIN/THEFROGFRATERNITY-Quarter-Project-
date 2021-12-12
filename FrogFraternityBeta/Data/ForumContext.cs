@@ -17,5 +17,7 @@ namespace FrogFraternityBeta.Data
             modelBuilder.Entity<Post>().ToTable("Posts");
             modelBuilder.Entity<User>().ToTable("Users"); 
         }
+
+        public DbSet<FrogFraternityBeta.Models.LoginViewModel> LoginViewModel { get; set; }
     }
 }
