@@ -16,10 +16,10 @@ namespace FrogFraternityBeta.Controllers
         private readonly ForumContext _context;
         public ForumController(ForumContext context)
         {
-            _context = context; 
+            _context = context;
         }
-        // GET: ForumController
 
+        // GET: ForumController
         public async Task<ActionResult> Index()
         {
             return View(await _context.Posts.ToListAsync());
@@ -39,38 +39,28 @@ namespace FrogFraternityBeta.Controllers
         // GET: ForumController/Create
         public ActionResult Create()
         {
-        
             return View();
         }
 
         // POST: ForumController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<ActionResult> Create(Post post)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                Post post1 = new Post()
                 {
-                    Post post1 = new Post()
-                    {
-                        Username = "Guest",
-                        Title = post.Title,
-                        Content = post.Content,
-                        PostTime = DateTime.Now
-                    };
-
-                    _context.Add(post1);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                return View(post);
+                    Username = HttpContext.Session.GetString("Username"),
+                    Title = post.Title,
+                    Content = post.Content,
+                    PostTime = DateTime.Now
+                };
+                _context.Add(post1);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(post);
         }
 
         // GET: ForumController/Edit/5
@@ -93,22 +83,24 @@ namespace FrogFraternityBeta.Controllers
             {
                 Post post = new Post()
                 {
-                    PostId = p.PostId, 
-                    Username = "Guest",
+                    PostId = p.PostId,
+                    Username = HttpContext.Session.GetString("Username"),
                     Title = p.Title,
                     Content = p.Content,
                     PostTime = DateTime.Now
                 };
-                _context.Update(p);
+                _context.Update(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(p); 
-            }
+            return View(p);
+        }
 
         // GET: ForumController/Delete/5
         public IActionResult Delete(int id)
         {
+            // TODO: Ensure the username of the person trying to delete
+            //         is the username of the creator of the post
             Post p = _context
                 .Posts
                 .Where(s => s.PostId == id)
@@ -117,16 +109,16 @@ namespace FrogFraternityBeta.Controllers
             return View(p);
         }
 
+        // TODO: ERROR OCCURS, LOOK UP LATER
         // POST: ForumController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
-            // TODO: Ensure the username of the person trying to delete is the username of the creator of the post
             Post p = _context
-                 .Posts
-                 .Where(s => s.PostId == id)
-                 .SingleOrDefault();
+                .Posts
+                .Where(s => s.PostId == id)
+                .SingleOrDefault();
 
             _context.Remove(p);
             await _context.SaveChangesAsync();

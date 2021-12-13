@@ -44,34 +44,7 @@ namespace FrogFraternityBeta.Controllers
             return View(user);
         }
 
-        // GET: User/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: User/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(RegisterViewModel reg)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = new User()
-                {
-                    Email = reg.Email,
-                    UserName = reg.Username,
-                    Password = reg.Password,
-                };
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(reg);
-        }
-        // TODO: MAKE REGISTER FUNCTIONS/PAGES
+        // TODO: Make register functions/pages
         public IActionResult Login()
         {
             if (HttpContext.Session.GetInt32("UserId").HasValue)
@@ -80,6 +53,8 @@ namespace FrogFraternityBeta.Controllers
             }
             return View();
         }
+
+        [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             User acct = await _context
@@ -91,9 +66,36 @@ namespace FrogFraternityBeta.Controllers
                 return View(model);
             }
 
+            HttpContext.Session.SetString("Username", acct.UserName);
+            HttpContext.Session.SetString("color", acct.fontColor);
             HttpContext.Session.SetInt32("UserId", acct.UserId);
 
             return RedirectToAction("Index", "Forum");
+
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel reg)
+        {
+            if (ModelState.IsValid)
+            {
+                User User = new User()
+                {
+                    Email = reg.Email,
+                    Password = reg.Password,
+                    UserName = reg.Username,
+                    fontColor = "#FFFFFF",
+                };
+                _context.Users.Add(User);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index", "Home");
+            }
+            return View(reg);
         }
 
         // GET: User/Edit/5
@@ -129,6 +131,9 @@ namespace FrogFraternityBeta.Controllers
                 try
                 {
                     _context.Update(user);
+
+                    HttpContext.Session.SetString("Username", user.UserName);
+                    HttpContext.Session.SetString("color", user.fontColor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -142,7 +147,7 @@ namespace FrogFraternityBeta.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "Forum");
             }
             return View(user);
         }

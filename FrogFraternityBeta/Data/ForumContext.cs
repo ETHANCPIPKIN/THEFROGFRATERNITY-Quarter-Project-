@@ -19,5 +19,7 @@ namespace FrogFraternityBeta.Data
         }
 
         public DbSet<FrogFraternityBeta.Models.LoginViewModel> LoginViewModel { get; set; }
+
+        public DbSet<FrogFraternityBeta.Models.RegisterViewModel> RegisterViewModel { get; set; }
     }
 }

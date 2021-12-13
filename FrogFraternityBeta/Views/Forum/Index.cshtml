@@ -1,24 +1,34 @@
 ﻿@model IEnumerable<FrogFraternityBeta.Models.Post>
+@using Microsoft.AspNetCore.Http;
 
-@{ 
-    ViewData["Title"] = "Forum Index"; 
-}
+@{ ViewData["Title"] = "Forum Index"; }
 
-<table class=" table">
+<div style="float:right">
+
+    @if (Context.Session.GetInt32("UserId").HasValue)
+    {
+@Html.ActionLink("Welcome back, " + Context.Session.GetString("Username") + "!", "Details", "User", new { id = Context.Session.GetInt32("UserId") }) }
+            else
+            {
+<a asp-controller="User" asp-action="Login">Login</a><br />
+                <a asp-controller="User" asp-action="Register">Register</a>            }
+</div>
+
+<table class="table">
     <tbody>
         @foreach (var item in Model)
-        { // This is the driving code that handles showing every post present in the database
-            <tr>
-                <td>
-                    @Html.ActionLink(item.Title + " | " + item.Username, "Details", new { id = item.PostId })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostTime)
-                </td>
-               
-            </tr>
-}
+        {
+<tr>
+    <td>
+        @Html.ActionLink(item.Title + " | " + item.Username, "Details", new { id = item.PostId })
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PostTime)
+    </td>
+</tr>}
     </tbody>
 </table>
-
-<a asp-controller="Forum" asp-action="Create">Create Post</a>
+<!---->
+@if (Context.Session.GetInt32("UserId").HasValue)
+{
+<a asp-controller="Forum" asp-action="Create" class="btn btn-primary">Create Post</a>            }
