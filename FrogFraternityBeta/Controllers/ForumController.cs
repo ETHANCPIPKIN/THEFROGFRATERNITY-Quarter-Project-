@@ -10,9 +10,15 @@ using FrogFraternityBeta.Models;
 
 namespace FrogFraternityBeta.Controllers
 {
+    /*
+    *
+    *
+    * ForumController controls the posts and the main index of the forum.  
+    *
+    */
     public class ForumController : Controller
     {
-
+        // this gives us access to the sql database
         private readonly ForumContext _context;
         public ForumController(ForumContext context)
         {

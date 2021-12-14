@@ -23,8 +23,8 @@
 <div class="text-xl-center multicolortext box" style="background-color: whitesmoke"> 
     <h1 class="display-4">Howdy Howdy Frog Fiends</h1>
     <p>Bulletin Board<br />
-    <a>-F.A.Q</a><br />
-    <a>-Rules</a><br />
+    @Html.ActionLink("Forum Rules", "Details", "Forum", new { id = 1})<br />
+    @Html.ActionLink("Forum F.A.Q", "Details", "Forum", new { id = 0})<br />
     <a asp-controller="Forum" asp-action="Index">-Forum Index</a><br />
     </p>
 </div>

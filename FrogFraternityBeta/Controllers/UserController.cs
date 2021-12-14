@@ -11,8 +11,13 @@ using Microsoft.AspNetCore.Http;
 
 namespace FrogFraternityBeta.Controllers
 {
+
+    //UserController controls user creation, edits, kand other functions for users
+
     public class UserController : Controller
     {
+
+        //This gives us access to the sql Database
         private readonly ForumContext _context;
 
         public UserController(ForumContext context)
@@ -25,8 +30,10 @@ namespace FrogFraternityBeta.Controllers
         {
             return View(await _context.Users.ToListAsync());
         }
-
+       
         // GET: User/Details/5
+        // User details is more for the owner of the account than other people, it lets
+        // them preview / links to edit their information and profile on the forum 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,7 +51,9 @@ namespace FrogFraternityBeta.Controllers
             return View(user);
         }
 
-        // TODO: Make register functions/pages
+        // GET: USER/LOGIN
+        // Login checks to make sure that a user isn't already in a session
+        // before sending them to the login page
         public IActionResult Login()
         {
             if (HttpContext.Session.GetInt32("UserId").HasValue)
@@ -54,6 +63,10 @@ namespace FrogFraternityBeta.Controllers
             return View();
         }
 
+
+        // POST: user/login
+        // when the user logs in with a matching account, variables are set
+        // in the session to coordinate with the rest of the site 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -74,10 +87,12 @@ namespace FrogFraternityBeta.Controllers
 
         }
 
+        // GET: User/Register
         public IActionResult Register()
         {
             return View();
         }
+        // POST: User/Register
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel reg)
         {
