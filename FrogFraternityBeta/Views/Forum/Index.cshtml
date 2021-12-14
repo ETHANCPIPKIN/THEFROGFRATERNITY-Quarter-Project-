@@ -3,15 +3,38 @@
 
 @{ ViewData["Title"] = "Forum Index"; }
 
+<style>
+    body {
+        background-color: whitesmoke;
+        font-family: 'Times New Roman';
+    }
+    .multicolortext {
+        background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-family: 'Times New Roman';
+    }
+
+    .box {
+        width: 500px;
+        border: 10px solid green;
+        background-color: darkgray;
+        margin: auto;
+    }
+</style>
+
+
 <div style="float:right">
 
     @if (Context.Session.GetInt32("UserId").HasValue)
     {
 @Html.ActionLink("Welcome back, " + Context.Session.GetString("Username") + "!", "Details", "User", new { id = Context.Session.GetInt32("UserId") }) }
-            else
-            {
+else
+{
 <a asp-controller="User" asp-action="Login">Login</a><br />
-                <a asp-controller="User" asp-action="Register">Register</a>            }
+                <a asp-controller="User" asp-action="Register">Register</a>}
 </div>
 
 <table class="table">
@@ -25,10 +48,11 @@
     <td>
         @Html.DisplayFor(modelItem => item.PostTime)
     </td>
-</tr>}
+</tr>
+}
     </tbody>
 </table>
 <!---->
 @if (Context.Session.GetInt32("UserId").HasValue)
 {
-<a asp-controller="Forum" asp-action="Create" class="btn btn-primary">Create Post</a>            }
+<a asp-controller="Forum" asp-action="Create" class="btn btn-primary">Create Post</a>}

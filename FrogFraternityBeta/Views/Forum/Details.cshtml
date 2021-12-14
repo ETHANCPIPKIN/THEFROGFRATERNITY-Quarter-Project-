@@ -2,6 +2,29 @@
 @using Microsoft.AspNetCore.Http;
 
 @{ ViewData["Title"] = "Post"; }
+<style>
+    body {
+        background-color: whitesmoke;
+        font-family: 'Times New Roman';
+    }
+
+    .multicolortext {
+        background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-family: 'Times New Roman';
+    }
+
+    .box {
+        width: 500px;
+        border: 10px solid green;
+        background-color: darkgray;
+        margin: auto;
+    }
+</style>
+
 
 <h1 style="color:@Context.Session.GetString("color")">@Html.DisplayFor(model => model.Title)</h1>
 
